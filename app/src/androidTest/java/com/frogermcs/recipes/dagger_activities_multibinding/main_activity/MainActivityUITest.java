@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-
 import com.frogermcs.recipes.dagger_activities_multibinding.ApplicationMock;
 import com.frogermcs.recipes.dagger_activities_multibinding.R;
 import com.frogermcs.recipes.dagger_activities_multibinding.Utils;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,49 +22,42 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-
 /**
  * Created by froger_mcs on 17/10/2016.
  */
 
-@RunWith(AndroidJUnit4.class)
-public class MainActivityUITest {
+@RunWith(AndroidJUnit4.class) public class MainActivityUITest {
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+  @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Rule
-    public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class, true, false);
+  @Rule public ActivityTestRule<MainActivity> activityRule =
+      new ActivityTestRule<>(MainActivity.class, true, false);
 
-    @Mock
-    MainActivityComponent.Builder builder;
-    @Mock
-    Utils utilsMock;
+  @Mock MainActivityComponent.Builder builder;
+  @Mock Utils utilsMock;
 
-    private MainActivityComponent mainActivityComponent = new MainActivityComponent() {
-        @Override
-        public void injectMembers(MainActivity instance) {
-            instance.mainActivityPresenter = new MainActivityPresenter(instance, utilsMock);
-        }
-    };
-
-    @Before
-    public void setUp() {
-        when(builder.build()).thenReturn(mainActivityComponent);
-        when(builder.activityModule(any(MainActivityComponent.MainActivityModule.class))).thenReturn(builder);
-
-        ApplicationMock app = (ApplicationMock) InstrumentationRegistry.getTargetContext().getApplicationContext();
-        app.putActivityComponentBuilder(builder, MainActivity.class);
+  private MainActivityComponent mainActivityComponent = new MainActivityComponent() {
+    @Override public void injectMembers(MainActivity instance) {
+      instance.mainActivityPresenter = new MainActivityPresenter(instance, utilsMock);
     }
+  };
 
-    @Test
-    public void checkTextView() {
-        String expectedText = "lorem ipsum";
-        when(utilsMock.getHardcodedText()).thenReturn(expectedText);
+  @Before public void setUp() {
+    when(builder.build()).thenReturn(mainActivityComponent);
+    when(builder.activityModule(any(MainActivityComponent.MainActivityModule.class))).thenReturn(
+        builder);
 
-        activityRule.launchActivity(new Intent());
+    ApplicationMock app =
+        (ApplicationMock) InstrumentationRegistry.getTargetContext().getApplicationContext();
+    app.putActivityComponentBuilder(builder, MainActivity.class);
+  }
 
-        onView(withId(R.id.textView)).check(matches(withText(expectedText)));
-    }
+  @Test public void checkTextView() {
+    String expectedText = "lorem ipsum";
+    when(utilsMock.getHardcodedText()).thenReturn(expectedText);
 
+    activityRule.launchActivity(new Intent());
+
+    onView(withId(R.id.textView)).check(matches(withText(expectedText)));
+  }
 }

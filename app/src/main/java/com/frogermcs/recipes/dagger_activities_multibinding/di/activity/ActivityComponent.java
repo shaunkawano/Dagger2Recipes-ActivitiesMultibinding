@@ -1,7 +1,6 @@
 package com.frogermcs.recipes.dagger_activities_multibinding.di.activity;
 
 import android.app.Activity;
-
 import dagger.MembersInjector;
 
 /**

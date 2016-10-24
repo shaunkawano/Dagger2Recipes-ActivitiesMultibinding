@@ -4,7 +4,6 @@ import com.frogermcs.recipes.dagger_activities_multibinding.main_activity.MainAc
 import com.frogermcs.recipes.dagger_activities_multibinding.main_activity.MainActivityComponent;
 import com.frogermcs.recipes.dagger_activities_multibinding.second_activity.SecondActivity;
 import com.frogermcs.recipes.dagger_activities_multibinding.second_activity.SecondActivityComponent;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
@@ -14,19 +13,15 @@ import dagger.multibindings.IntoMap;
  */
 
 @Module(
-        subcomponents = {
-                MainActivityComponent.class,
-                SecondActivityComponent.class
-        })
-public abstract class ActivityBindingModule {
+    subcomponents = {
+        MainActivityComponent.class, SecondActivityComponent.class
+    }) public abstract class ActivityBindingModule {
 
-    @Binds
-    @IntoMap
-    @ActivityKey(MainActivity.class)
-    public abstract ActivityComponentBuilder mainActivityComponentBuilder(MainActivityComponent.Builder impl);
+  @Binds @IntoMap @ActivityKey(MainActivity.class)
+  public abstract ActivityComponentBuilder mainActivityComponentBuilder(
+      MainActivityComponent.Builder impl);
 
-    @Binds
-    @IntoMap
-    @ActivityKey(SecondActivity.class)
-    public abstract ActivityComponentBuilder secondActivityComponentBuilder(SecondActivityComponent.Builder impl);
+  @Binds @IntoMap @ActivityKey(SecondActivity.class)
+  public abstract ActivityComponentBuilder secondActivityComponentBuilder(
+      SecondActivityComponent.Builder impl);
 }
